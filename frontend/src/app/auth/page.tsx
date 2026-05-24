@@ -65,11 +65,9 @@ export default function AuthPage() {
             </button>
           </p>
 
-          <div className="text-xs text-neutral-400 text-center border-t border-neutral-200 dark:border-neutral-700 pt-4">
-            <p>Демо-аккаунты:</p>
-            <p>Админ: admin@iphonestore.com / admin123</p>
-            <p>Пользователь: user@example.com / user123</p>
-          </div>
+          <p className="text-xs text-neutral-400 text-center border-t border-neutral-200 dark:border-neutral-700 pt-4">
+            Нажимая кнопку, вы соглашаетесь с условиями использования и политикой конфиденциальности
+          </p>
         </form>
       </div>
     </div>

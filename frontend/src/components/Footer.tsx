@@ -40,12 +40,13 @@ export default function Footer() {
               <li>✉️ support@iphonestore.ru</li>
               <li>📍 Москва, ул. Apple, 1</li>
               <li>🕐 Пн-Вс 10:00 - 22:00</li>
+              <li><a href="https://t.me/durov_crow_67" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white transition">💬 Telegram: @durov_crow_67</a></li>
             </ul>
           </div>
         </div>
         <div className="mt-10 pt-8 border-t border-neutral-200 dark:border-neutral-800 text-center text-sm text-neutral-500">
           <p>© {new Date().getFullYear()} iPhone Store. Все права защищены.</p>
-          <p className="mt-1 text-xs text-neutral-400">Демо-проект. Не является реальным интернет-магазином.</p>
+          <p className="mt-1 text-xs text-neutral-400">Официальный интернет-магазин Apple iPhone</p>
         </div>
       </div>
     </footer>

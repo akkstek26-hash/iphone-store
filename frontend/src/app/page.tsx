@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { api } from '@/lib/api';
+import { getIphoneImage } from '@/lib/images';
 
 export default function Home() {
   const [featured, setFeatured] = useState<any[]>([]);
@@ -55,7 +56,7 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link href="/product/iphone-17-pro-max" className="px-8 py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-full transition-all hover:shadow-xl hover:shadow-blue-500/25">
-                  Купить — от 89 990 ₽
+                  Купить — от 149 990 ₽
                 </Link>
                 <Link href="/catalog?search=iphone+17" className="px-8 py-3.5 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-medium rounded-full border border-neutral-200 dark:border-neutral-700 transition">
                   Все модели →
@@ -65,8 +66,8 @@ export default function Home() {
             <div className="flex justify-center">
               <div className="relative w-72 h-72 sm:w-96 sm:h-96">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"/>
-                <div className="relative w-full h-full flex items-center justify-center text-[200px] sm:text-[280px] select-none">
-                  📱
+                <div className="relative w-full h-full flex items-center justify-center select-none">
+                  <img src={getIphoneImage('iphone-17-pro-max')} alt="iPhone 17 Pro Max" className="w-full h-full object-contain" />
                 </div>
               </div>
             </div>

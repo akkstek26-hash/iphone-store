@@ -2,13 +2,14 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
 import { useStore } from '@/store/useStore';
+import { getIphoneImage } from '@/lib/images';
 
 export default function ProductDetail({ slug }: { slug: string }) {
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedStorage, setSelectedStorage] = useState(0);
-  const { addToCart, favorites, toggleFavorite } = useStore();
+  const { addToCart, cart, favorites, toggleFavorite } = useStore();
 
   useEffect(() => {
     async function load() {
@@ -43,13 +44,15 @@ export default function ProductDetail({ slug }: { slug: string }) {
 
   const currentPrice = product.price + (product.storage[selectedStorage]?.priceAdd || 0);
   const isFav = favorites.includes(product._id);
+  const inCart = cart.some(i => i.id === product._id);
   const discount = product.oldPrice ? Math.round((1 - product.price / product.oldPrice) * 100) : 0;
+  const productImage = getIphoneImage(product.slug || slug);
 
   const handleAddToCart = () => {
     addToCart({
       id: product._id,
       name: product.name,
-      image: product.images?.[0] || '',
+      image: productImage,
       price: currentPrice,
       color: product.colors[selectedColor]?.name || '',
       storage: product.storage[selectedStorage]?.size || '',
@@ -62,8 +65,8 @@ export default function ProductDetail({ slug }: { slug: string }) {
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
         {/* Images */}
         <div className="space-y-4">
-          <div className="aspect-square bg-neutral-50 dark:bg-neutral-800/50 rounded-3xl flex items-center justify-center overflow-hidden">
-            <div className="text-8xl">📱</div>
+          <div className="aspect-square bg-neutral-50 dark:bg-neutral-800/50 rounded-3xl flex items-center justify-center overflow-hidden p-8">
+            <img src={productImage} alt={product.name} className="w-full h-full object-contain" />
           </div>
         </div>
 
@@ -122,8 +125,8 @@ export default function ProductDetail({ slug }: { slug: string }) {
 
           {/* Buttons */}
           <div className="flex gap-3">
-            <button onClick={handleAddToCart} className="flex-1 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-2xl transition-all hover:shadow-xl hover:shadow-blue-500/25">
-              Добавить в корзину
+            <button onClick={handleAddToCart} className={`flex-1 py-4 text-white font-semibold rounded-2xl transition-all hover:shadow-xl ${inCart ? 'bg-green-500 hover:bg-green-600 hover:shadow-green-500/25' : 'bg-blue-500 hover:bg-blue-600 hover:shadow-blue-500/25'}`}>
+              {inCart ? 'В корзине' : 'Добавить в корзину'}
             </button>
             <button onClick={() => toggleFavorite(product._id)} className={`px-5 py-4 rounded-2xl border transition ${isFav ? 'bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-800' : 'border-neutral-200 dark:border-neutral-700 hover:border-neutral-300'}`}>
               <svg className={`w-6 h-6 ${isFav ? 'text-red-500 fill-red-500' : 'text-neutral-400'}`} viewBox="0 0 24 24" fill={isFav ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2}>

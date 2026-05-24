@@ -5,7 +5,7 @@ import { api } from '@/lib/api';
 
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart, user } = useStore();
-  const [form, setForm] = useState({ name: '', email: '', phone: '', street: '', city: '', zip: '', country: 'Россия' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', street: '', apartment: '', city: '', zip: '', country: 'Россия' });
   const [delivery, setDelivery] = useState('courier');
   const [payment, setPayment] = useState('card');
   const [promo, setPromo] = useState('');
@@ -96,6 +96,7 @@ export default function CheckoutPage() {
             <div className="grid sm:grid-cols-2 gap-4">
               {[
                 { label: 'Улица, дом', key: 'street' },
+                { label: 'Квартира / офис', key: 'apartment' },
                 { label: 'Город', key: 'city' },
                 { label: 'Индекс', key: 'zip' },
                 { label: 'Страна', key: 'country' },

@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useStore } from '@/store/useStore';
+import { getIphoneImage } from '@/lib/images';
 
 interface Product {
   _id: string;
@@ -19,15 +20,16 @@ interface Product {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { addToCart, favorites, toggleFavorite } = useStore();
+  const { addToCart, cart, favorites, toggleFavorite } = useStore();
   const isFav = favorites.includes(product._id);
+  const inCart = cart.some(i => i.id === product._id);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     addToCart({
       id: product._id,
       name: product.name,
-      image: product.images[0] || '',
+      image: getIphoneImage(product.slug),
       price: product.price,
       color: product.colors[0]?.name || '',
       storage: product.storage[0]?.size || '',
@@ -41,6 +43,7 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   const discount = product.oldPrice ? Math.round((1 - product.price / product.oldPrice) * 100) : 0;
+  const imgSrc = getIphoneImage(product.slug);
 
   return (
     <Link href={`/product/${product.slug}`} className="group block">
@@ -65,7 +68,7 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Image */}
         <div className="aspect-square flex items-center justify-center mb-4 overflow-hidden">
           <img
-            src={product.images[0]}
+            src={imgSrc}
             alt={product.name}
             className="w-3/4 h-3/4 object-contain transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
@@ -106,9 +109,13 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Add to cart */}
         <button
           onClick={handleAddToCart}
-          className="mt-3 w-full py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25"
+          className={`mt-3 w-full py-2.5 text-white text-sm font-medium rounded-xl transition-all duration-200 hover:shadow-lg ${
+            inCart
+              ? 'bg-green-500 hover:bg-green-600 hover:shadow-green-500/25'
+              : 'bg-blue-500 hover:bg-blue-600 hover:shadow-blue-500/25'
+          }`}
         >
-          В корзину
+          {inCart ? 'В корзине' : 'В корзину'}
         </button>
       </div>
     </Link>

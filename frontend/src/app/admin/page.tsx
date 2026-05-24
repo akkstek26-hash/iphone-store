@@ -136,6 +136,18 @@ export default function AdminPage() {
             </div>
           )}
 
+          {/* Store Contacts */}
+          <div className="bg-neutral-50 dark:bg-neutral-800/50 rounded-2xl p-6">
+            <h3 className="font-semibold mb-4">Контакты магазина</h3>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2"><span>📍</span><span>Москва, ул. Apple, д. 1</span></div>
+              <div className="flex items-center gap-2"><span>📞</span><span>+7 (800) 555-35-35</span></div>
+              <div className="flex items-center gap-2"><span>📧</span><span>info@iphonestore.com</span></div>
+              <div className="flex items-center gap-2"><span>💬</span><a href="https://t.me/durov_crow_67" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Telegram: @durov_crow_67</a></div>
+              <div className="flex items-center gap-2"><span>🕐</span><span>Пн-Вс 10:00 - 22:00</span></div>
+            </div>
+          </div>
+
           {/* Recent orders */}
           {dashboard?.recentOrders && dashboard.recentOrders.length > 0 && (
             <div className="bg-neutral-50 dark:bg-neutral-800/50 rounded-2xl p-6">
@@ -173,8 +185,15 @@ export default function AdminPage() {
                   <span className="font-mono font-bold">{order.orderNumber}</span>
                   <span className="text-xs text-neutral-500 ml-2">{new Date(order.createdAt).toLocaleString('ru-RU')}</span>
                   <div className="text-sm text-neutral-500 mt-1">
-                    {order.user?.name} · {order.user?.email} · {order.shippingAddress?.phone}
+                    {order.shippingAddress?.name} · {order.shippingAddress?.email} · {order.shippingAddress?.phone}
                   </div>
+                  {order.shippingAddress && (
+                    <div className="text-xs text-neutral-400 mt-1">
+                      📍 {order.shippingAddress.city}, {order.shippingAddress.street}
+                      {order.shippingAddress.apartment && `, кв. ${order.shippingAddress.apartment}`}
+                      {order.shippingAddress.zip && `, ${order.shippingAddress.zip}`}
+                    </div>
+                  )}
                 </div>
                 <div className="text-right">
                   <span className="font-bold">{order.totalPrice?.toLocaleString('ru-RU')} ₽</span>
